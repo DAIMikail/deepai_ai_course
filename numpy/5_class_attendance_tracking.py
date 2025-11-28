@@ -26,41 +26,42 @@ import numpy as np
 # 1 = geldi, 0 = gelmedi
 # Her satır bir öğrenciyi, her sütun bir günü temsil ediyor
 
-np.random.seed(42)  # Tekrar üretilebilirlik için
+devamsizlik = np.array([
+    # Öğrenci 1-10: İyi devam eden öğrenciler (0-2 devamsızlık)
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 1: 0 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 2: 1 devamsızlık
+    [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 3: 1 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 4: 1 devamsızlık
+    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],  # Öğrenci 5: 2 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 6: 1 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],  # Öğrenci 7: 1 devamsızlık
+    [1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 8: 1 devamsızlık
+    [1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],  # Öğrenci 9: 2 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 10: 0 devamsızlık
 
-# Gerçekçi devamsızlık verisi oluştur
-# Çoğu öğrenci çoğu gün gelir, ama bazıları daha fazla devamsızlık yapar
-devamsizlik = np.ones((25, 20), dtype=int)  # Başlangıçta herkes geldi
+    # Öğrenci 11-16: İyi devam eden öğrenciler (devam)
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1],  # Öğrenci 11: 1 devamsızlık
+    [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 12: 1 devamsızlık
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],  # Öğrenci 13: 2 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 14: 0 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1],  # Öğrenci 15: 1 devamsızlık
+    [1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],  # Öğrenci 16: 2 devamsızlık
 
-# Bazı öğrenciler için rastgele devamsızlıklar ekle
-# Öğrenci 0-15: İyi devam (0-2 devamsızlık)
-for i in range(16):
-    devamsiz_gunler = np.random.choice(20, size=np.random.randint(0, 3), replace=False)
-    devamsizlik[i, devamsiz_gunler] = 0
+    # Öğrenci 17-21: Orta düzey devam (3-5 devamsızlık)
+    [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1],  # Öğrenci 17: 3 devamsızlık
+    [1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1],  # Öğrenci 18: 3 devamsızlık
+    [1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1],  # Öğrenci 19: 4 devamsızlık
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0],  # Öğrenci 20: 4 devamsızlık
+    [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],  # Öğrenci 21: 4 devamsızlık
 
-# Öğrenci 16-20: Orta devam (3-5 devamsızlık)
-for i in range(16, 21):
-    devamsiz_gunler = np.random.choice(20, size=np.random.randint(3, 6), replace=False)
-    devamsizlik[i, devamsiz_gunler] = 0
+    # Öğrenci 22-24: Kötü devam (6-8 devamsızlık)
+    [1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1],  # Öğrenci 22: 6 devamsızlık
+    [0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0],  # Öğrenci 23: 7 devamsızlık
+    [1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1],  # Öğrenci 24: 7 devamsızlık
 
-# Öğrenci 21-23: Kötü devam (6-8 devamsızlık)
-for i in range(21, 24):
-    devamsiz_gunler = np.random.choice(20, size=np.random.randint(6, 9), replace=False)
-    devamsizlik[i, devamsiz_gunler] = 0
-
-# Öğrenci 24: Hiç devamsızlık yok (mükemmel devam)
-# Zaten 1'lerle dolu, değişiklik yok
-
-# Bazı günlerde toplu devamsızlık oluştur (örneğin hastalık salgını, kötü hava)
-# ÖNEMLİ: Öğrenci 24 hariç diğerlerinden seçim yapıyoruz (hiç devamsızlık yapmayanı korumak için)
-
-# Gün 7: 6 öğrenci gelmedi (Öğrenci 24 hariç, 0-23 arası seçim)
-devamsiz_ogrenciler_gun7 = np.random.choice(24, size=6, replace=False)  # 0-23 arası
-devamsizlik[devamsiz_ogrenciler_gun7, 7] = 0
-
-# Gün 14: 7 öğrenci gelmedi (Öğrenci 24 hariç, 0-23 arası seçim)
-devamsiz_ogrenciler_gun14 = np.random.choice(24, size=7, replace=False)  # 0-23 arası
-devamsizlik[devamsiz_ogrenciler_gun14, 14] = 0
+    # Öğrenci 25: Mükemmel devam (hiç devamsızlık yok)
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Öğrenci 25: 0 devamsızlık
+], dtype=int)
 
 print("Devamsızlık Array'i Oluşturuldu:")
 print(f"Shape: {devamsizlik.shape} (25 öğrenci × 20 gün)")

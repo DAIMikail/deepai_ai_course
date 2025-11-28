@@ -85,6 +85,10 @@ uretim = np.array([
 isci_toplam_uretim = uretim.sum(axis=2)
 print(f"Her işçinin toplam üretimi (3 vardiya × 5 işçi):\n{isci_toplam_uretim}\n")
 
+# [[471, 538, 418, 498, 398],  # Sabah vardiyası - 5 işçinin 10 günlük toplamları
+# [438, 478, 518, 458, 418],  # Öğle vardiyası - 5 işçinin 10 günlük toplamları
+# [398, 458, 378, 498, 438]]  # Gece vardiyası - 5 işçinin 10 günlük toplamları
+
 # ADIM 2: Her vardiyada en yüksek üretimi bul
 # max(axis=1) → İşçiler boyunca en büyük değeri bul
 # Sonuç: (3,) array → Her vardiya için bir değer
