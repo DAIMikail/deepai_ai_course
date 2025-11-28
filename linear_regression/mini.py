@@ -14,29 +14,50 @@ X_norm = (X - X_mean) / X_std
 y_norm = (y - y_mean) / y_std
 
 def minibatch_gradient_descent(X,y,batch_size=2,learning_rate=0.1,epochs=100):
+    """
+    Mini-Batch Gradient Descent
+
+    BATCH VE SGD'NİN ORTASI - İKİSİNİN AVANTAJLARINI BİRLEŞTİRİR:
+    ┌─────────────┬─────────────┬─────────────┬─────────────────────┐
+    │ Yöntem      │ Örnek Sayısı│ Güncelleme  │ Özellik             │
+    ├─────────────┼─────────────┼─────────────┼─────────────────────┤
+    │ Batch       │ n (tümü)    │ 1/epoch     │ Kararlı ama yavaş   │
+    │ SGD         │ 1           │ n/epoch     │ Hızlı ama gürültülü │
+    │ Mini-Batch  │ k (1<k<n)   │ n/k /epoch  │ Dengeli yaklaşım    │
+    └─────────────┴─────────────┴─────────────┴─────────────────────┘
+    """
     n= len(X)
     w,b = 0.0, 0.0
     history = []
 
     for epoch in range(epochs):
+        # Verileri karıştır
         indices = np.random.permutation(n)
         X_shuffled = X[indices]
         y_shuffled = y[indices]
 
+        # VERİYİ KÜÇÜK GRUPLARA (MINI-BATCH) BÖLEREK İŞLE
         for i in range(0,n,batch_size):
+            # Mini-batch oluştur
             X_batch = X_shuffled[i:i+batch_size]
             y_batch = y_shuffled[i:i+batch_size]
             batch_n = len(X_batch)
 
+            # Mini-batch üzerinden tahmin
             y_pred = w * X_batch + b
 
+            # Gradyanlar (MINI-BATCH ÜZERİNDEN - n yerine batch_n)
+            # ∂L/∂w = (2/k) * Σ(ŷ - y) * x  (k = batch_size)
+            # ∂L/∂b = (2/k) * Σ(ŷ - y)
             dw = (2/batch_n) * np.sum((y_pred - y_batch) * X_batch)
-
             db = (2/batch_n) * np.sum(y_pred - y_batch)
 
+            # Güncelleme (HER MINI-BATCH SONRASI)
             w = w - learning_rate * dw
             b = b - learning_rate * db
 
+        # Loss (epoch sonunda tüm veri üzerinden)
+        # MSE = (1/n) * Σ(ŷ - y)²
         loss = np.mean((w* X +b - y) ** 2)
         print(f"Epoch: {epoch} loss: {loss}")
         history.append(loss)

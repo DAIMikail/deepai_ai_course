@@ -24,14 +24,17 @@ def batch_gradient_descent(X, y, learning_rate=0.1, epochs=100):
         y_pred = w * X + b
         
         # Loss (MSE)
+        # MSE = (1/n) * Σ(ŷ - y)²
         loss = np.mean((y_pred - y) ** 2)
         history.append(loss)
         
         # Gradyanlar (TÜM VERİ ÜZERİNDEN)
+        # ∂MSE/∂w = (2/n) * Σ(ŷ - y) * x
+        # ∂MSE/∂b = (2/n) * Σ(ŷ - y)
         dw = (2/n) * np.sum((y_pred - y) * X)
         db = (2/n) * np.sum(y_pred - y)
         
-        # Güncelleme
+        # Güncelleme yani hatayı azaltacak yönde adım atmak.
         w = w - learning_rate * dw
         b = b - learning_rate * db
 
