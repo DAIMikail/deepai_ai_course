@@ -132,6 +132,12 @@ def one_hot_encode(y, num_classes=10):
 Y_train = one_hot_encode(y_train)
 Y_test = one_hot_encode(y_test)
 
+#forward
+#loss
+#backward
+#gradient update
+#tekrar
+
 # print(f"\nDoğrulama (ilk 3 örnek):")
 # for i in range(3):
 #     print(f"  y={y_train[i]} ({class_names[y_train[i]]:12s}) → {Y_train[:, i].astype(int)}")
@@ -249,6 +255,7 @@ def softmax(z):
 # print(f"  Softmax:       {softmax(large_scores).flatten().round(3)}")
 # print(f"  (Overflow olmadan çalıştı ✓)")
 
+# forward_pass
 def forward_propagation(X, parameters):
     """
     İleri yayılım - Veriyi ağdan geçir
@@ -298,24 +305,24 @@ print(f"Test input boyutu: {X_sample.shape}")
 # Forward pass
 a2_test, cache_test = forward_propagation(X_sample, parameters)
 
-# print(f"\nCache boyutları:")
-# print(f"  z1: {cache_test['z1'].shape}")
-# print(f"  a1: {cache_test['a1'].shape}")
-# print(f"  z2: {cache_test['z2'].shape}")
-# print(f"  a2: {cache_test['a2'].shape}")
+print(f"\nCache boyutları:")
+print(f"  z1: {cache_test['z1'].shape}")
+print(f"  a1: {cache_test['a1'].shape}")
+print(f"  z2: {cache_test['z2'].shape}")
+print(f"  a2: {cache_test['a2'].shape}")
 
-# print(f"\nÇıktı (a2) boyutu: {a2_test.shape}")
+print(f"\nÇıktı (a2) boyutu: {a2_test.shape}")
 
-# # İlk örneğin tahminlerini göster
-# print(f"\nİlk örnek için tahminler:")
-# print(f"  Gerçek etiket: {y_train[0]} ({class_names[y_train[0]]})")
-# print(f"  Tahmin olasılıkları:")
-# for i, (name, prob) in enumerate(zip(class_names, a2_test[:, 0])):
-#     bar = "█" * int(prob * 30)
-#     print(f"    {i}: {name:12s} {prob:.3f} {bar}")
+# İlk örneğin tahminlerini göster
+print(f"\nİlk örnek için tahminler:")
+print(f"  Gerçek etiket: {y_train[0]} ({class_names[y_train[0]]})")
+print(f"  Tahmin olasılıkları:")
+for i, (name, prob) in enumerate(zip(class_names, a2_test[:, 0])):
+    bar = "█" * int(prob * 30)
+    print(f"    {i}: {name:12s} {prob:.3f} {bar}")
 
-# print(f"\n  Olasılıklar toplamı: {a2_test[:, 0].sum():.4f} (1.0 olmalı)")
-# print(f"  En yüksek olasılık: {class_names[np.argmax(a2_test[:, 0])]}")
+print(f"\n  Olasılıklar toplamı: {a2_test[:, 0].sum():.4f} (1.0 olmalı)")
+print(f"  En yüksek olasılık: {class_names[np.argmax(a2_test[:, 0])]}")
 
 def compute_loss(a2, Y):
     """
