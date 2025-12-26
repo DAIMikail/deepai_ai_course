@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Alma Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sol Panel - Notlar -->
+        <div class="notes-panel">
+            <div class="panel-header">
+                <h2>Notlarım</h2>
+                <button id="refresh-btn">Yenile</button>
+            </div>
+            <div id="notes-list" class="notes-list">
+                <!-- Notlar buraya yüklenecek -->
+            </div>
+        </div>
+
+        <!-- Sağ Panel - Chat -->
+        <div class="chat-panel">
+            <div class="panel-header">
+                <h2>Chat</h2>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <!-- Mesajlar buraya eklenecek -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Mesajınızı yazın...">
+                <button id="send-btn">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
