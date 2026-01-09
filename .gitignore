@@ -12,3 +12,4 @@ wheels/
 # Large data files
 *.csv
 .env
+chroma_db
